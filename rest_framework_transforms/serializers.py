@@ -23,8 +23,9 @@ class BaseVersioningSerializer(object):
         data = super(BaseVersioningSerializer, self).to_representation(instance)
         if instance:
             request = self.context.get('request')
+            version = request.get('version')
 
-            if request and hasattr(request, 'version'):
+            if request and version:
                 # demote data until we've run the transform just above the requested version
 
                 for transform in get_transform_classes(self.transform_base, base_version=request.version, reverse=True):
